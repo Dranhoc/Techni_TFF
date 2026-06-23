@@ -1,8 +1,9 @@
 import sequelize from './config.js';
 import User from './entities/user.entity.js';
 import Item from './entities/item.entity.js';
+import GeoData from './entities/geodata.entity.js';
 
-User.hasMany(Item, { as: 'items', foreignKey: 'userId' });
-Item.belongsTo(User, { as: 'owner', foreignKey: 'userId' });
+User.hasOne(GeoData, { as: 'address', foreignKey: 'userId' });
+GeoData.belongsTo(User, { as: 'user', foreignKey: 'userId' });
 
-export default { User, Item, sequelize };
+export default { User, Item, GeoData, sequelize };
