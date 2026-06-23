@@ -5,10 +5,10 @@ export class EmailAlreadyExistsError extends Error {
 	}
 }
 
-export class PseudoAlreadyExistsError extends Error {
+export class UsernameAlreadyExistsError extends Error {
 	statusCode = 400;
 	constructor() {
-		super('Pseudo already exists');
+		super('Username already exists');
 	}
 }
 
@@ -19,10 +19,10 @@ export class InvalidCredentialsError extends Error {
 	}
 }
 
-export class NoPseudoOrEmailProvidedError extends Error {
+export class NoUsernameOrEmailProvidedError extends Error {
 	statusCode = 400;
 	constructor() {
-		super('No email or pseudo provided');
+		super('No email or username provided');
 	}
 }
 

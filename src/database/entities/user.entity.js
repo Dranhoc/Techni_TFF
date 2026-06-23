@@ -14,7 +14,7 @@ const User = sequelize.define(
 			allowNull: false,
 			unique: true,
 		},
-		pseudo: {
+		username: {
 			type: DataTypes.STRING,
 			allowNull: false,
 			unique: true,
@@ -22,6 +22,34 @@ const User = sequelize.define(
 		password: {
 			type: DataTypes.STRING,
 			allowNull: false,
+		},
+		firstname: {
+			type: DataTypes.STRING,
+			allowNull: false,
+		},
+		lastname: {
+			type: DataTypes.STRING,
+			allowNull: false,
+		},
+		birthdate: {
+			type: DataTypes.DATE,
+			allowNull: true,
+		},
+		NISS: {
+			type: DataTypes.STRING,
+			allowNull: false,
+		},
+		phone: {
+			type: DataTypes.STRING,
+			allowNull: false,
+		},
+		status: {
+			type: DataTypes.STRING,
+			allowNull: true,
+			validate: {
+				isIn: [['active', 'inactive', 'deleted']],
+			},
+			defaultValue: 'active',
 		},
 		isAdmin: {
 			type: DataTypes.BOOLEAN,

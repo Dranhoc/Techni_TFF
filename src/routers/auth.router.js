@@ -17,13 +17,13 @@ const authRouter = Router();
  *         application/json:
  *           schema:
  *             type: object
- *             required: [email, pseudo, password]
+ *             required: [email, username, password]
  *             properties:
  *               email:
  *                 type: string
  *                 format: email
  *                 example: user@example.com
- *               pseudo:
+ *               username:
  *                 type: string
  *                 example: JohnDoe
  *               password:
@@ -41,7 +41,7 @@ authRouter.post('/register', bodyValidator(registerValidator), authController.re
  * @swagger
  * /auth/login:
  *   post:
- *     summary: Login with email or pseudo
+ *     summary: Login with email or username
  *     tags: [Auth]
  *     requestBody:
  *       required: true
@@ -55,7 +55,7 @@ authRouter.post('/register', bodyValidator(registerValidator), authController.re
  *                 type: string
  *                 format: email
  *                 example: user@example.com
- *               pseudo:
+ *               username:
  *                 type: string
  *                 example: JohnDoe
  *               password:

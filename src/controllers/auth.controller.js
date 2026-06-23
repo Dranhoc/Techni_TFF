@@ -1,12 +1,12 @@
 import userService from '../services/user.service.js';
 import { generateToken } from '../utils/jwt.utils.js';
 import { sendMail } from '../services/mailer.service.js';
+import { UserDetailsDTO } from '../dtos/user.dto.js';
 
 const authController = {
 	register: async (req, res) => {
 		const newUser = await userService.create(req.data);
-		await sendMail(newUser.email, 'Welcome!', '<h1>Welcome!</h1>');
-		res.status(204).send();
+		res.status(201).json({ newUser });
 	},
 	login: async (req, res) => {
 		const user = await userService.login(req.data);

@@ -18,6 +18,7 @@ configure({
 
 const { APP_PORT } = process.env;
 await db.sequelize.authenticate();
+await db.sequelize.sync({ alter: true });
 
 const app = express();
 app.use(cors({ origin: '*' }));

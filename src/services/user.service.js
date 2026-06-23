@@ -1,11 +1,6 @@
 import db from '../database/index.js';
 import bcrypt from 'bcrypt';
-import {
-	EmailAlreadyExistsError,
-	InvalidCredentialsError,
-	NoPseudoOrEmailProvidedError,
-	PseudoAlreadyExistsError,
-} from '../custom-errors/user.error.js';
+import { EmailAlreadyExistsError, InvalidCredentialsError, NoUsernameOrEmailProvidedError, UsernameAlreadyExistsError } from '../custom-errors/user.error.js';
 const { ENCRYPTION_ROUND } = process.env;
 
 const userService = {
@@ -14,9 +9,9 @@ const userService = {
 			const existingEmail = await db.User.findOne({ where: { email: data.email } });
 			if (existingEmail) throw new EmailAlreadyExistsError();
 		}
-		if (data.pseudo) {
-			const existingPseudo = await db.User.findOne({ where: { pseudo: data.pseudo } });
-			if (existingPseudo) throw new PseudoAlreadyExistsError();
+		if (data.username) {
+			const existingUsername = await db.User.findOne({ where: { username: data.username } });
+			if (existingUsername) throw new UsernameAlreadyExistsError();
 		}
 		if (data.password) {
 			data.password = bcrypt.hashSync(data.password, +ENCRYPTION_ROUND);
@@ -24,11 +19,11 @@ const userService = {
 		return await db.User.create(data);
 	},
 	login: async (credentials) => {
-		if (!credentials.pseudo && !credentials.email) {
-			throw new NoPseudoOrEmailProvidedError();
+		if (!credentials.username && !credentials.email) {
+			throw new NoUsernameOrEmailProvidedError();
 		}
-		const field = credentials.email ? 'email' : 'pseudo';
-		const value = credentials.email || credentials.pseudo;
+		const field = credentials.email ? 'email' : 'username';
+		const value = credentials.email || credentials.username;
 		const user = await db.User.findOne({ where: { [field]: value } });
 		if (!user) throw new InvalidCredentialsError();
 		const isValid = bcrypt.compareSync(credentials.password, user.password);
